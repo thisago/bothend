@@ -2,7 +2,7 @@
 
 ## Version 0.2.0 (26/06/2023)
 
-- Added row adding in Karax DSL
+- Added dynamic row adding in Karax DSL
 
 ---
 
