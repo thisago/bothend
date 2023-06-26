@@ -5,7 +5,7 @@
 
 <br>
 
-[License](#license)
+[About](#about) - [License](#license)
 </div>
 
 [**renderer.nim**](src/renderer.nim)
@@ -53,6 +53,15 @@ proc renderPage: VNode =
 
 setRenderer renderPage
 ```
+
+## About
+
+This is PoC of how interesting will be if Karax DSL for JS backend works in C-like backend (ignoring events).
+
+In this way, we can define just one renderer and render it in both sides, backend and frontend. This allows SSR for JS DSLs.
+
+This example uses an karax fork that allows it: https://github.com/thisago/karax
+
 ## License
 
 This repository is libre, licensed over MIT.
