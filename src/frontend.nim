@@ -2,6 +2,6 @@ include pkg/karax/prelude
 import ./renderer
 
 proc renderPage: VNode =
-  render(false)
+  render(backend = false)
 
 setRenderer renderPage

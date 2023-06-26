@@ -5,14 +5,16 @@
 
 <br>
 
-<!-- [About](#about) - [Features](#features) -->
 [License](#license)
 </div>
 
+[**renderer.nim**](src/renderer.nim)
 ```nim
-# renderer.nim
 include pkg/karax/prelude
 [...]
+
+var rows = @["Static row, available in both ends"]
+
 proc render*(backend: bool): VNode =
   ## HTML Renderer for JS, allowed with events too!
   buildHtml(tdiv(id = "ROOT")):
@@ -21,28 +23,33 @@ proc render*(backend: bool): VNode =
         (if backend: "backend" else: "frontend")
       proc onclick(ev: Event; n: VNode) =
         echo "clicked"
+        rows.add "Frontend powers!"
+    for row in rows:
+      p: text row
     script(src = "script/frontend.js")
-
 ```
+
+[**backend.nim**](src/backend.nim)
 ```nim
-# backend.nim (compile with: `nim c backend.js`)
-include pkg/karax/prelude
+# compile with: `nimble build_release`
 import pkg/jester
 import ./renderer
 
 routes:
   get "/":
-    resp $baseHtml render(true)
+    resp baseHtml render(backend = true)
   get "/script/frontend.js":
     resp readFile "public/script/frontend.js"
 ```
+
+[**frontend.nim**](src/frontend.nim)
 ```nim
-# frontend.nim (compile with: `nim js frontend.js`)
+# compile with: `nimble build_js_release`
 include pkg/karax/prelude
 import ./renderer
 
 proc renderPage: VNode =
-  render(false)
+  render(backend = false)
 
 setRenderer renderPage
 ```

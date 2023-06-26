@@ -1,1 +1,2 @@
 --define:usestdlib
+--threads:off
