@@ -1,7 +1,0 @@
-{
-  "version": 1,
-  "includes": [],
-  "dependencies": [
-    "/data/os/dev/nim/bothend/develop/karax"
-  ]
-}

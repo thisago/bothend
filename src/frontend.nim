@@ -1,5 +1,4 @@
 include pkg/karax/prelude
-
 import ./renderer
 
 proc renderPage: VNode =

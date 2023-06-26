@@ -12,7 +12,7 @@ binDir = "build"
 # Dependencies
 
 requires "nim >= 1.9.1"
-requires "karax"
+requires "https://github.com/thisago/karax"
 requires "jester"
 
 task buildJs, "Builds the frontend":
