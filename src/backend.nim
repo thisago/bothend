@@ -1,6 +1,10 @@
-import pkg/karax
+include pkg/karax/prelude
 import pkg/jester
+
+import ./renderer
 
 routes:
   get "/":
-    resp h1("Hello world")
+    resp $baseHtml render(true)
+  get "/script/frontend.js":
+    resp readFile "public/script/frontend.js"

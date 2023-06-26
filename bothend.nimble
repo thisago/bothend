@@ -5,7 +5,8 @@ author        = "Thiago Navarro"
 description   = "Karax model in both ends (back and front)"
 license       = "MIT"
 srcDir        = "src"
-bin           = @["backend"]
+bin           = @["backend", "frontend"]
+binDir = "build"
 
 
 # Dependencies
@@ -15,7 +16,10 @@ requires "karax"
 requires "jester"
 
 task buildJs, "Builds the frontend":
-  exec "nim js -o build/script/frontend.js src/frontend"
+  exec "nim js --out:public/script/frontend.js src/frontend"
   
 task buildJsRelease, "Builds the frontend":
-  exec "nim js -d:release -o build/script/frontend.js src/frontend"
+  exec "nim js --out:public/script/frontend.js -d:release src/frontend"
+
+task buildRelease, "Builds the frontend":
+  exec "nimble build -d:release"
