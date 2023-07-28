@@ -1,17 +1,25 @@
 <div align="center">
 
 # **both-end**
-#### Render your HTML in both ends!
 
-<br>
+#### SSR for SPA Karax example
 
 [About](#about) - [License](#license)
+
 </div>
 
 [**renderer.nim**](src/renderer.nim)
+
 ```nim
-include pkg/karax/prelude
-[...]
+when defined js:
+  include pkg/karax/prelude
+else:
+  import pkg/karax/[
+    karaxdsl,
+    vdom,
+  ]
+
+# [...]
 
 var rows = @["Static row, available in both ends"]
 
@@ -21,15 +29,16 @@ proc render*(backend: bool): VNode =
     h1:
       text "Hello from " &
         (if backend: "backend" else: "frontend")
-      proc onclick(ev: Event; n: VNode) =
-        echo "clicked"
-        rows.add "Frontend powers!"
+      when defined js:
+        proc onclick(ev: Event; n: VNode) =
+          echo "clicked"
+          rows.add "Frontend powers!"
     for row in rows:
       p: text row
-    script(src = "script/frontend.js")
 ```
 
 [**backend.nim**](src/backend.nim)
+
 ```nim
 # compile with: `nimble build_release`
 import pkg/jester
@@ -43,6 +52,7 @@ routes:
 ```
 
 [**frontend.nim**](src/frontend.nim)
+
 ```nim
 # compile with: `nimble build_js_release`
 include pkg/karax/prelude
@@ -56,11 +66,9 @@ setRenderer renderPage
 
 ## About
 
-This is PoC of how interesting will be if Karax DSL for JS backend works in C-like backend (ignoring events).
-
-In this way, we can define just one renderer and render it in both sides, backend and frontend. This allows SSR for JS DSLs.
-
-This example uses an karax fork that allows it: https://github.com/thisago/karax
+This is an example of how to pre-render a SPA in server, defining just one
+renderer and render it in both sides, backend and frontend.
+This allows SSR for SPA.
 
 ## License
 

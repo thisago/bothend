@@ -1,4 +1,3 @@
-# include pkg/karax/prelude
 when defined js:
   include pkg/karax/prelude
 else:
@@ -12,9 +11,10 @@ when not defined js:
     let vnode = buildHtml(html):
       head:
         title: text "Both-end"
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(name = "viewport", content = "width=device-width, initial-scale=1.0")
       body:
         bodyNode
+        script(src = "script/frontend.js")
     result = $vnode
 
 var rows = @["Static row, available in both ends"]
@@ -31,4 +31,3 @@ proc render*(backend: bool): VNode =
           rows.add "Frontend powers!"
     for row in rows:
       p: text row
-    script(src = "script/frontend.js")
