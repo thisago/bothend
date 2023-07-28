@@ -1,4 +1,11 @@
-include pkg/karax/prelude
+# include pkg/karax/prelude
+when defined js:
+  include pkg/karax/prelude
+else:
+  import pkg/karax/[
+    karaxdsl,
+    vdom,
+  ]
 
 when not defined js:
   proc baseHtml*(bodyNode: VNode): string =
@@ -18,9 +25,10 @@ proc render*(backend: bool): VNode =
     h1:
       text "Hello from " &
         (if backend: "backend" else: "frontend")
-      proc onclick(ev: Event; n: VNode) =
-        echo "clicked"
-        rows.add "Frontend powers!"
+      when defined js:
+        proc onclick(ev: Event; n: VNode) =
+          echo "clicked"
+          rows.add "Frontend powers!"
     for row in rows:
       p: text row
     script(src = "script/frontend.js")
